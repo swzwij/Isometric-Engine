@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{13af6a8d-a402-43b9-b1ac-22b87adcb986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Utils">
+      <UniqueIdentifier>{37659729-fa3a-4163-98b9-ab359932d5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Assets">
+      <UniqueIdentifier>{0baceac7-0972-4e03-bb3c-1c3d387cd986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Assets\Images">
+      <UniqueIdentifier>{3796cb3f-b791-45cf-9d22-b400345088ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,18 +33,21 @@
     <ClCompile Include="IsometricTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector2.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Framework\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="IsometricTile.png">
-      <Filter>Source Files</Filter>
-    </Image>
     <Image Include="tile.png">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Assets\Images</Filter>
     </Image>
   </ItemGroup>
 </Project>
