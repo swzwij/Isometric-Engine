@@ -10,10 +10,17 @@ public:
 	{
 		_worldSize = worldSize;
 
-		_grassTileTexture.loadFromFile("grassTile.png");
-		_waterTileTexture.loadFromFile("waterTile.png");
-		_stoneTileTexture.loadFromFile("stoneTile.png");
-		_sandTileTexture.loadFromFile("sandTile.png");
+		if(!_grassTileTexture.loadFromFile("grassTile.png"))
+			std::cout << "Failed to load grassTile.png" << std::endl;
+
+		if (!_waterTileTexture.loadFromFile("waterTile.png"))
+			std::cout << "Failed to load waterTile.png" << std::endl;
+
+		if (!_stoneTileTexture.loadFromFile("stoneTile.png"))
+			std::cout << "Failed to load stoneTile.png" << std::endl;
+
+		if(!_sandTileTexture.loadFromFile("sandTile.png"))
+			std::cout << "Failed to load sandTile.png" << std::endl;
 
 		Setup();
 	}
@@ -22,7 +29,7 @@ public:
 	{
 		_tiles.clear();
 
-		float scale = 0.1;
+		float scale = .1;
 		int octaves = 4;
 		float persistence = 0.4;
 
@@ -43,11 +50,14 @@ public:
 
 				sf::Texture texture = height < -1 
 					? _waterTileTexture 
-					: height >= -1 && height < -0.75 
+					: height >= -1 && height < -0.5 
 					? _sandTileTexture 
-					: height >= -0.75 && height < 1.5 
-					? _grassTileTexture 
-					: _stoneTileTexture;
+					: height > 2 
+					?  _stoneTileTexture
+					: _grassTileTexture;
+
+				if (height < -1)
+					height = -1;
 
 				_tiles.push_back(IsometricTile
 				(

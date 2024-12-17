@@ -7,7 +7,8 @@ class IsometricTile
 public:
 	IsometricTile(const sf::Texture& texture, Vector2 position, float height)
 	{
-		_sprite.setTexture(texture);
+		_texture = texture;
+		_sprite.setTexture(_texture);
 
 		float tileWidth = _sprite.getLocalBounds().width;
 		float tileHeight = _sprite.getLocalBounds().height;
@@ -25,9 +26,11 @@ public:
 
 	void Draw(sf::RenderWindow& window)
 	{
+		_sprite.setTexture(_texture);
 		window.draw(_sprite);
 	}
 
 private:
+	sf::Texture _texture;
 	sf::Sprite _sprite;
 };
