@@ -46,6 +46,10 @@ private:
 				_view.zoom(0.95f);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 				_view.zoom(1.05f);
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+				_world.Setup();
+
 		}
 	}
 

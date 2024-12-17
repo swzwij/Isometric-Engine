@@ -10,7 +10,17 @@ public:
 	{
 		_worldSize = worldSize;
 
-		_tileTexture.loadFromFile("tile.png");
+		_grassTileTexture.loadFromFile("grassTile.png");
+		_waterTileTexture.loadFromFile("waterTile.png");
+		_stoneTileTexture.loadFromFile("stoneTile.png");
+		_sandTileTexture.loadFromFile("sandTile.png");
+
+		Setup();
+	}
+
+	void Setup()
+	{
+		_tiles.clear();
 
 		float scale = 0.1;
 		int octaves = 4;
@@ -26,14 +36,22 @@ public:
 				(
 					x * scale,
 					y * scale,
-					0.0, 
+					0.0,
 					octaves,
 					persistence
 				) * 5;
 
+				sf::Texture texture = height < -1 
+					? _waterTileTexture 
+					: height >= -1 && height < -0.75 
+					? _sandTileTexture 
+					: height >= -0.75 && height < 1.5 
+					? _grassTileTexture 
+					: _stoneTileTexture;
+
 				_tiles.push_back(IsometricTile
 				(
-					_tileTexture,
+					texture,
 					Vector2(x, y),
 					height
 				));
@@ -50,6 +68,10 @@ public:
 private:
 	Vector2 _worldSize;
 
-	sf::Texture _tileTexture;
+	sf::Texture _grassTileTexture;
+	sf::Texture _waterTileTexture;
+	sf::Texture _stoneTileTexture;
+	sf::Texture _sandTileTexture;
+
 	std::vector<IsometricTile> _tiles;
 };

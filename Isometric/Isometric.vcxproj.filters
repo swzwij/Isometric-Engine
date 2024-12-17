@@ -49,7 +49,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="tile.png">
+    <Image Include="grassTile.png">
+      <Filter>Source Files\Assets\Images</Filter>
+    </Image>
+    <Image Include="sandTile.png">
+      <Filter>Source Files\Assets\Images</Filter>
+    </Image>
+    <Image Include="stoneTile.png">
+      <Filter>Source Files\Assets\Images</Filter>
+    </Image>
+    <Image Include="waterTile.png">
       <Filter>Source Files\Assets\Images</Filter>
     </Image>
   </ItemGroup>
