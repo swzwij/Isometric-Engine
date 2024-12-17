@@ -33,6 +33,25 @@ private:
 			if (event.type == sf::Event::Closed)
 				_window.close();
 
+			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+			{
+				sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
+				sf::Vector2f worldPos = _window.mapPixelToCoords(mousePos, _view);
+
+				Vector2 isometricTilePosition = WorldToIsometricTilePosition(Vector2(worldPos.x, worldPos.y));
+
+				if (_selectedTile != nullptr)
+					_selectedTile->SetSelected(false);
+
+				_selectedTile = _world.GetTileAt(isometricTilePosition);
+				_selectedTile->SetSelected(true);
+
+				_rectangle.setSize(sf::Vector2f(25, 25));
+				_rectangle.setFillColor(sf::Color::Red);
+				_rectangle.setPosition(worldPos);
+				_rectangle.setOrigin(12.5, 12.5);
+			}
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				_view.move(-25, 0);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -64,10 +83,32 @@ private:
 
 		_world.Render(_window);
 
+		_window.draw(_rectangle);
+
 		_window.display();
+	}
+
+	Vector2 WorldToIsometricTilePosition(const Vector2& worldPosition, float tileWidth = 256.0f, float tileHeight = 128.0f)
+	{
+		float halfWidth = tileWidth / 2.0f;
+		float halfHeight = tileHeight / 2.0f;
+
+		//float adjustedWorldY = worldPosition.y + (_selectedTile ? _selectedTile->GetHeight() * halfHeight : 0);
+
+		float isoX = (worldPosition.x / halfWidth + worldPosition.y / halfHeight) / 2.0f;
+		float isoY = (worldPosition.y / halfHeight - worldPosition.x / halfWidth) / 2.0f;
+
+		return Vector2
+		(
+			std::round(isoX),
+			std::round(isoY)
+		);
 	}
 
 	sf::RenderWindow _window;
 	sf::View _view;
 	World _world = World(Vector2(25, 25));
+
+	sf::RectangleShape _rectangle;
+	IsometricTile* _selectedTile = nullptr;
 };

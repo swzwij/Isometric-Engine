@@ -59,6 +59,8 @@ public:
 				if (height < -1)
 					height = -1;
 
+				height = 0;
+
 				_tiles.push_back(IsometricTile
 				(
 					texture,
@@ -69,10 +71,25 @@ public:
 		}
 	}
 
+	IsometricTile* GetTileAt(Vector2 position)
+	{
+		if (position.x < 0 || position.x >= _worldSize.x || position.y < 0 || position.y >= _worldSize.y)
+			return nullptr;
+
+		int index = position.y + (position.x - 1) * _worldSize.y;
+
+		return &_tiles[index];
+	}
+
 	void Render(sf::RenderWindow& window)
 	{
 		for (auto& tile : _tiles)
 			tile.Draw(window);
+	}
+
+	Vector2 GetWorldSize() const
+	{
+		return _worldSize;
 	}
 
 private:

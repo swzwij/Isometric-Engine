@@ -7,6 +7,7 @@ class IsometricTile
 public:
 	IsometricTile(const sf::Texture& texture, Vector2 position, float height)
 	{
+		_height = height;
 		_texture = texture;
 		_sprite.setTexture(_texture);
 
@@ -30,7 +31,18 @@ public:
 		window.draw(_sprite);
 	}
 
+	void SetSelected(bool selected)
+	{
+		_sprite.setColor(selected ? sf::Color::Red : sf::Color::White);
+	}
+
+	float GetHeight() const
+	{
+		return _height;
+	}
+
 private:
 	sf::Texture _texture;
 	sf::Sprite _sprite;
+	float _height;
 };
