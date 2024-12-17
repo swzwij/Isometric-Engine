@@ -59,8 +59,6 @@ public:
 				if (height < -1)
 					height = -1;
 
-				height = 0;
-
 				_tiles.push_back(IsometricTile
 				(
 					texture,

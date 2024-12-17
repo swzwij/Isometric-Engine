@@ -44,7 +44,9 @@ private:
 					_selectedTile->SetSelected(false);
 
 				_selectedTile = _world.GetTileAt(isometricTilePosition);
-				_selectedTile->SetSelected(true);
+
+				if (_selectedTile != nullptr)
+					_selectedTile->SetSelected(true);
 
 				_rectangle.setSize(sf::Vector2f(25, 25));
 				_rectangle.setFillColor(sf::Color::Red);
