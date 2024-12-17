@@ -29,7 +29,7 @@ public:
 					0.0, 
 					octaves,
 					persistence
-				) * 7.5;
+				) * 5;
 
 				_tiles.push_back(IsometricTile
 				(

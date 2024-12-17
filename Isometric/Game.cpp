@@ -65,5 +65,5 @@ private:
 
 	sf::RenderWindow _window;
 	sf::View _view;
-	World _world = World(Vector2(10, 10));
+	World _world = World(Vector2(25, 25));
 };
