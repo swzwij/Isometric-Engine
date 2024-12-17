@@ -21,13 +21,6 @@ public:
 		);
 
 		_sprite.setPosition(isometricPosition.x, isometricPosition.y);
-
-		//_sprite.setColor(sf::Color
-		//(
-		//	255 * (position.x / 10.0f),
-		//	255 * (position.y / 10.0f),
-		//	128
-		//));
 	}
 
 	void Draw(sf::RenderWindow& window)

@@ -34,18 +34,18 @@ private:
 				_window.close();
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				_view.move(-5, 0);
+				_view.move(-25, 0);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				_view.move(5, 0);
+				_view.move(25, 0);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				_view.move(0, -5);
+				_view.move(0, -25);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				_view.move(0, 5);
+				_view.move(0, 25);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				_view.zoom(0.99f);
+				_view.zoom(0.95f);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				_view.zoom(1.01f);
+				_view.zoom(1.05f);
 		}
 	}
 
@@ -65,5 +65,5 @@ private:
 
 	sf::RenderWindow _window;
 	sf::View _view;
-	World _world = World(Vector2(12, 12));
+	World _world = World(Vector2(10, 10));
 };

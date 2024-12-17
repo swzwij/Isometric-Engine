@@ -44,6 +44,9 @@
     <ClInclude Include="Vector2.h">
       <Filter>Source Files\Framework\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>Source Files\Framework\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="tile.png">

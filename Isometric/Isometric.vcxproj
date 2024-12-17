@@ -139,6 +139,7 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>

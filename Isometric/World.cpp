@@ -1,6 +1,7 @@
 #include "SFML/Graphics.hpp"
 #include "Vector2.h"
 #include "IsometricTile.cpp"
+#include "PerlinNoise.h"
 
 class World
 {
@@ -9,27 +10,33 @@ public:
 	{
 		_worldSize = worldSize;
 
-		if (!_tileTexture.loadFromFile("tile.png"))
-		{
-			std::cout << "Failed to load tile texture" << std::endl;
-		}
-		else
-		{
-			std::cout << "Texture loaded successfully" << std::endl;
-		}
+		_tileTexture.loadFromFile("tile.png");
+
+		float scale = 0.1;
+		int octaves = 4;
+		float persistence = 0.4;
+
+		PerlinNoise noise;
 
 		for (int x = 0; x < _worldSize.x; x++)
 		{
 			for (int y = 0; y < _worldSize.y; y++)
 			{
-				float height = rand() % 3;
-				height = rand() % 2 == 0 ? height : -height;
-				height /= 10;
+				float height = noise.octaveNoise
+				(
+					x * scale,
+					y * scale,
+					0.0, 
+					octaves,
+					persistence
+				) * 7.5;
 
-				if (y == 0 || y == _worldSize.y - 1 || x == 0 || x == _worldSize.x - 1)
-					height = 0;
-
-				_tiles.push_back(IsometricTile(_tileTexture, Vector2(x, y), height));
+				_tiles.push_back(IsometricTile
+				(
+					_tileTexture,
+					Vector2(x, y),
+					height
+				));
 			}
 		}
 	}
