@@ -27,52 +27,7 @@ public:
 
 	void Setup()
 	{
-		_tiles.clear();
-
-		float scale = .1;
-		int octaves = 4;
-		float persistence = 0.4;
-
-		PerlinNoise noise;
-
-		for (int x = 0; x < _worldSize.x; x++)
-		{
-			for (int y = 0; y < _worldSize.y; y++)
-			{
-				float height = noise.octaveNoise
-				(
-					x * scale,
-					y * scale,
-					0.0,
-					octaves,
-					persistence
-				) * 5;
-
-				//height = round(height);
-
-				sf::Texture texture = height <= -1 
-					? _waterTileTexture 
-					: height > -1 && height <= -0.5 
-					? _sandTileTexture 
-					: height > 2 
-					?  _stoneTileTexture
-					: _grassTileTexture;
-
-				if (height < -1)
-					height = -1;
-
-				//height = 0;
-
-				_tiles.push_back(IsometricTile
-				(
-					texture,
-					Vector2(x, y),
-					height
-				));
-
-				_heights.push_back(height);
-			}
-		}
+		GenerateTiles();
 	}
 
 	IsometricTile* GetTileAt(Vector2 position)
@@ -106,4 +61,62 @@ private:
 
 	std::vector<IsometricTile> _tiles;
 	std::vector<float> _heights;
+
+	float _noiseScale = 0.05;
+	int _noiseOctaves = 4;
+	float _noisePersistence = 0.2;
+
+	int _waterHeight = -1;
+	int _sandHeight = -0.5;
+	int _grassHeight = 0;
+	int _stoneHeight = 2;
+
+	void GenerateTiles()
+	{
+		PerlinNoise noise;
+
+		_tiles.clear();
+
+		for (int x = 0; x < _worldSize.x; x++)
+		{
+			for (int y = 0; y < _worldSize.y; y++)
+			{
+				float height = noise.octaveNoise
+				(
+					x * _noiseScale,
+					y * _noiseScale,
+					0.0,
+					_noiseOctaves,
+					_noisePersistence
+				) * 7.5;
+
+				height = round(height * 2) / 2;
+
+				sf::Texture texture = GetTileTexture(height);
+
+				if (height < _waterHeight)
+					height = _waterHeight;
+
+				_tiles.push_back(IsometricTile
+				(
+					texture,
+					Vector2(x, y),
+					height
+				));
+
+				_heights.push_back(height);
+			}
+		}
+	}
+
+	sf::Texture GetTileTexture(float height)
+	{
+		return height <= _waterHeight
+			? _waterTileTexture
+			: height > _waterHeight && height <= _sandHeight && height < _grassHeight
+			? _sandTileTexture
+			: height > _stoneHeight
+			? _stoneTileTexture
+			: _grassTileTexture;
+	}
 };

@@ -92,7 +92,7 @@ private:
 
 	sf::RenderWindow _window;
 	sf::View _view;
-	World _world = World(Vector2(25, 25));
+	World _world = World(Vector2(100, 100));
 
 	sf::RectangleShape _rectangle;
 	IsometricTile* _selectedTile = nullptr;
