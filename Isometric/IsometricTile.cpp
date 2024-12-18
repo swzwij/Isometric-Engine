@@ -9,7 +9,7 @@ public:
 	{
 		_height = height;
 		_texture = texture;
-		_sprite.setTexture(_texture);
+		_sprite.setTexture(texture);
 
 		float tileWidth = _sprite.getLocalBounds().width;
 		float tileHeight = _sprite.getLocalBounds().height;
@@ -36,9 +36,23 @@ public:
 		_sprite.setColor(selected ? sf::Color::Red : sf::Color::White);
 	}
 
-	float GetHeight() const
+	float GetHeight() const { return _height; }
+
+	static Vector2 WorldToIsometric(const Vector2& worldPosition, float tileWidth = 256.0f, float tileHeight = 128.0f)
 	{
-		return _height;
+		float halfWidth = tileWidth / 2.0f;
+		float halfHeight = tileHeight / 2.0f;
+
+		//float adjustedWorldY = worldPosition.y + (_selectedTile ? _selectedTile->GetHeight() * halfHeight : 0);
+
+		float isoX = (worldPosition.x / halfWidth + worldPosition.y / halfHeight) / 2.0f;
+		float isoY = (worldPosition.y / halfHeight - worldPosition.x / halfWidth) / 2.0f;
+
+		return Vector2
+		(
+			std::round(isoX),
+			std::round(isoY)
+		);
 	}
 
 private:

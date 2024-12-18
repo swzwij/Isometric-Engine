@@ -38,7 +38,7 @@ private:
 				sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
 				sf::Vector2f worldPos = _window.mapPixelToCoords(mousePos, _view);
 
-				Vector2 isometricTilePosition = WorldToIsometricTilePosition(Vector2(worldPos.x, worldPos.y));
+				Vector2 isometricTilePosition = IsometricTile::WorldToIsometric(Vector2(worldPos.x, worldPos.y));
 
 				if (_selectedTile != nullptr)
 					_selectedTile->SetSelected(false);
@@ -88,23 +88,6 @@ private:
 		_window.draw(_rectangle);
 
 		_window.display();
-	}
-
-	Vector2 WorldToIsometricTilePosition(const Vector2& worldPosition, float tileWidth = 256.0f, float tileHeight = 128.0f)
-	{
-		float halfWidth = tileWidth / 2.0f;
-		float halfHeight = tileHeight / 2.0f;
-
-		//float adjustedWorldY = worldPosition.y + (_selectedTile ? _selectedTile->GetHeight() * halfHeight : 0);
-
-		float isoX = (worldPosition.x / halfWidth + worldPosition.y / halfHeight) / 2.0f;
-		float isoY = (worldPosition.y / halfHeight - worldPosition.x / halfWidth) / 2.0f;
-
-		return Vector2
-		(
-			std::round(isoX),
-			std::round(isoY)
-		);
 	}
 
 	sf::RenderWindow _window;

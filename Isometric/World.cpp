@@ -48,9 +48,11 @@ public:
 					persistence
 				) * 5;
 
-				sf::Texture texture = height < -1 
+				//height = round(height);
+
+				sf::Texture texture = height <= -1 
 					? _waterTileTexture 
-					: height >= -1 && height < -0.5 
+					: height > -1 && height <= -0.5 
 					? _sandTileTexture 
 					: height > 2 
 					?  _stoneTileTexture
@@ -59,12 +61,16 @@ public:
 				if (height < -1)
 					height = -1;
 
+				//height = 0;
+
 				_tiles.push_back(IsometricTile
 				(
 					texture,
 					Vector2(x, y),
 					height
 				));
+
+				_heights.push_back(height);
 			}
 		}
 	}
@@ -99,4 +105,5 @@ private:
 	sf::Texture _sandTileTexture;
 
 	std::vector<IsometricTile> _tiles;
+	std::vector<float> _heights;
 };
