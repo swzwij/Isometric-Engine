@@ -10,17 +10,26 @@ public:
 	{
 		_worldSize = worldSize;
 
-		if(!_grassTileTexture.loadFromFile("grassTile.png"))
+		_grassTileTexture = std::make_shared<sf::Texture>();
+		_waterTileTexture = std::make_shared<sf::Texture>();
+		_stoneTileTexture = std::make_shared<sf::Texture>();
+		_sandTileTexture = std::make_shared<sf::Texture>();
+		_transparentWaterTexture = std::make_shared<sf::Texture>();
+
+		if (!_grassTileTexture->loadFromFile("grassTile.png"))
 			std::cout << "Failed to load grassTile.png" << std::endl;
 
-		if (!_waterTileTexture.loadFromFile("waterTile.png"))
+		if (!_waterTileTexture->loadFromFile("waterTile.png"))
 			std::cout << "Failed to load waterTile.png" << std::endl;
 
-		if (!_stoneTileTexture.loadFromFile("stoneTile.png"))
+		if (!_stoneTileTexture->loadFromFile("stoneTile.png"))
 			std::cout << "Failed to load stoneTile.png" << std::endl;
 
-		if(!_sandTileTexture.loadFromFile("sandTile.png"))
+		if (!_sandTileTexture->loadFromFile("sandTile.png"))
 			std::cout << "Failed to load sandTile.png" << std::endl;
+
+		if (!_transparentWaterTexture->loadFromFile("transparentWaterTile.png"))
+			std::cout << "Failed to load transparentWater.png" << std::endl;
 
 		Setup();
 	}
@@ -40,10 +49,13 @@ public:
 		return &_tiles[index];
 	}
 
-	void Render(sf::RenderWindow& window)
+	void Render(sf::RenderWindow& window, sf::View& view)
 	{
-		for (auto& tile : _tiles)
+		for (IsometricTile& tile : _tiles)	
 			tile.Draw(window);
+
+		for (IsometricTile& waterTile : _waterTiles)
+			waterTile.Draw(window);
 	}
 
 	Vector2 GetWorldSize() const
@@ -54,22 +66,24 @@ public:
 private:
 	Vector2 _worldSize;
 
-	sf::Texture _grassTileTexture;
-	sf::Texture _waterTileTexture;
-	sf::Texture _stoneTileTexture;
-	sf::Texture _sandTileTexture;
+	std::shared_ptr<sf::Texture> _grassTileTexture;
+	std::shared_ptr<sf::Texture> _waterTileTexture;
+	std::shared_ptr<sf::Texture> _stoneTileTexture;
+	std::shared_ptr<sf::Texture> _sandTileTexture;
+	std::shared_ptr<sf::Texture> _transparentWaterTexture;
 
 	std::vector<IsometricTile> _tiles;
+	std::vector<IsometricTile> _waterTiles;
 	std::vector<float> _heights;
-
-	float _noiseScale = 0.05;
-	int _noiseOctaves = 4;
-	float _noisePersistence = 0.2;
 
 	int _waterHeight = -1;
 	int _sandHeight = -0.5;
 	int _grassHeight = 0;
 	int _stoneHeight = 2;
+
+	float _noiseScale = 0.05;
+	int _noiseOctaves = 4;
+	float _noisePersistence = 0.2;
 
 	void GenerateTiles()
 	{
@@ -92,28 +106,38 @@ private:
 
 				height = round(height * 2) / 2;
 
-				sf::Texture texture = GetTileTexture(height);
+				const sf::Texture& texture = *GetTileTexture(height);
 
-				if (height < _waterHeight)
-					height = _waterHeight;
 
-				_tiles.push_back(IsometricTile
+				IsometricTile tile = IsometricTile
 				(
 					texture,
 					Vector2(x, y),
 					height
-				));
+				);
 
+				_tiles.push_back(tile);
 				_heights.push_back(height);
+
+				if (height <= -1)
+				{
+					IsometricTile waterTile = IsometricTile
+					(
+						*_transparentWaterTexture,
+						Vector2(x, y),
+						_waterHeight + 0.5f,
+						sf::Color(255, 255, 255, 255)
+					);
+
+					_waterTiles.push_back(waterTile);
+				}
 			}
 		}
 	}
 
-	sf::Texture GetTileTexture(float height)
+	std::shared_ptr<sf::Texture> GetTileTexture(float height)
 	{
-		return height <= _waterHeight
-			? _waterTileTexture
-			: height > _waterHeight && height <= _sandHeight && height < _grassHeight
+		return height <= _sandHeight && height < _grassHeight
 			? _sandTileTexture
 			: height > _stoneHeight
 			? _stoneTileTexture

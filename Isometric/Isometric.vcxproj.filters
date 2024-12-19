@@ -61,5 +61,8 @@
     <Image Include="waterTile.png">
       <Filter>Source Files\Assets\Images</Filter>
     </Image>
+    <Image Include="transparentWaterTile.png">
+      <Filter>Source Files\Assets\Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -55,18 +55,18 @@ private:
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				_view.move(-25, 0);
+				_view.move(-250, 0);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				_view.move(25, 0);
+				_view.move(250, 0);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				_view.move(0, -25);
+				_view.move(0, -250);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				_view.move(0, 25);
+				_view.move(0, 250);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				_view.zoom(0.95f);
+				_view.zoom(0.9f);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				_view.zoom(1.05f);
+				_view.zoom(1.1f);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				_world.Setup();
@@ -83,7 +83,7 @@ private:
 	{
 		_window.clear(sf::Color(24, 36, 48));
 
-		_world.Render(_window);
+		_world.Render(_window, _view);
 
 		_window.draw(_rectangle);
 
@@ -92,7 +92,7 @@ private:
 
 	sf::RenderWindow _window;
 	sf::View _view;
-	World _world = World(Vector2(100, 100));
+	World _world = World(Vector2(250, 250));
 
 	sf::RectangleShape _rectangle;
 	IsometricTile* _selectedTile = nullptr;

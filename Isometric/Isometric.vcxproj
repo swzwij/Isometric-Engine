@@ -146,6 +146,7 @@
     <Image Include="grassTile.png" />
     <Image Include="sandTile.png" />
     <Image Include="stoneTile.png" />
+    <Image Include="transparentWaterTile.png" />
     <Image Include="waterTile.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
