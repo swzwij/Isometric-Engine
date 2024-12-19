@@ -1,25 +1,17 @@
 #include "SFML/Graphics.hpp"
 #include "Vector2.h"
 #include <iostream>
+#include "CoordinateConverter.h"
 
 class IsometricTile
 {
 public:
 	IsometricTile(const sf::Texture& texture, Vector2 position, float height, sf::Color = sf::Color::White)
 	{
-		float tileWidth = 256.0f;
-		float tileHeight = 128.0f;
-
-		Vector2 isometricPosition = Vector2
-		(
-			(position.x - position.y) * (tileWidth / 2),
-			(position.x + position.y) * (tileHeight / 2) - (height * tileHeight)
-		);
-
-		_position = isometricPosition;
+		_position = CoordinateConverter::WorldToIsometric(position, height);
 		_height = height;
 
-		_sprite.setPosition(isometricPosition.x, isometricPosition.y);
+		_sprite.setPosition(_position.x, _position.y);
 		_sprite.setTexture(texture);
 	}
 
@@ -44,23 +36,6 @@ public:
 	float GetHeight() const
 	{
 		return _height;
-	}
-
-	static Vector2 WorldToIsometric(const Vector2& worldPosition, float tileWidth = 256.0f, float tileHeight = 128.0f)
-	{
-		float halfWidth = tileWidth / 2.0f;
-		float halfHeight = tileHeight / 2.0f;
-
-		//float adjustedWorldY = worldPosition.y + (_selectedTile ? _selectedTile->GetHeight() * halfHeight : 0);
-
-		float isoX = (worldPosition.x / halfWidth + worldPosition.y / halfHeight) / 2.0f;
-		float isoY = (worldPosition.y / halfHeight - worldPosition.x / halfWidth) / 2.0f;
-
-		return Vector2
-		(
-			std::round(isoX),
-			std::round(isoY)
-		);
 	}
 
 private:

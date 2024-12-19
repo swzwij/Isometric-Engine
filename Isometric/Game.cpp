@@ -1,6 +1,9 @@
 #include "SFML/Graphics.hpp"
 #include "Vector2.h"
 #include "World.cpp"
+#include "CoordinateConverter.h"
+#include "InputHandler.cpp"
+
 
 class Game
 {
@@ -42,7 +45,7 @@ private:
 				sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
 				sf::Vector2f worldPos = _window.mapPixelToCoords(mousePos, _view);
 
-				Vector2 isometricTilePosition = IsometricTile::WorldToIsometric(Vector2(worldPos.x, worldPos.y));
+				Vector2 isometricTilePosition = CoordinateConverter::IsometricToWorld(Vector2(worldPos.x, worldPos.y));
 
 				if (_selectedTile != nullptr)
 					_selectedTile->SetSelected(false);
@@ -52,6 +55,8 @@ private:
 				if (_selectedTile != nullptr)
 					_selectedTile->SetSelected(true);
 			}
+
+			Vector2 input = 
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				_view.move(-250, 0);
