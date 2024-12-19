@@ -11,6 +11,7 @@ public:
 		_window.setFramerateLimit(60);
 
 		_view = sf::View{ sf::FloatRect(0, 0, windowSize.x, windowSize.y) };
+		_view.move(0, _world.GetWorldSize().y * 128);
 	}
 
 	void Run()

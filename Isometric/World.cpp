@@ -50,14 +50,7 @@ public:
 
 		float height = tile->GetHeight();
 
-		std::cout << height << std::endl;
-
 		return tile;
-
-		/*
-
-		if (height == 0)
-			return tile;*/
 	}
 
 	void Render(sf::RenderWindow& window, sf::View& view)
