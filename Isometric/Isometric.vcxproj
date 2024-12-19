@@ -137,6 +137,7 @@
     <ClCompile Include="IsometricTile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldGeneration.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PerlinNoise.h" />

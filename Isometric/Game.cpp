@@ -34,6 +34,9 @@ private:
 			if (event.type == sf::Event::Closed)
 				_window.close();
 
+			if (event.type == sf::Event::Resized)
+				_view.setSize(event.size.width, event.size.height);
+
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			{
 				sf::Vector2i mousePos = sf::Mouse::getPosition(_window);
@@ -67,6 +70,8 @@ private:
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 				_world.Setup();
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+				_window.close();
 		}
 	}
 
@@ -86,7 +91,7 @@ private:
 
 	sf::RenderWindow _window;
 	sf::View _view;
-	World _world = World(Vector2(1000, 1000));
+	World _world = World(Vector2(250, 250));
 
 	IsometricTile* _selectedTile = nullptr;
 };

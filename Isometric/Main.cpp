@@ -1,6 +1,12 @@
 #include "Game.cpp"
+#include "windows.h"
+#include "Vector2.h"
 
-const Vector2 SCREEN_SIZE(2000, 1500);
+Vector2 SCREEN_SIZE = Vector2
+(
+	GetSystemMetrics(SM_CXSCREEN) / 1.5,
+	GetSystemMetrics(SM_CYSCREEN) / 1.5
+);
 
 int main()
 {

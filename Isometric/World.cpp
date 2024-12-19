@@ -2,6 +2,7 @@
 #include "Vector2.h"
 #include "IsometricTile.cpp"
 #include "PerlinNoise.h"
+#include "WorldGeneration.cpp"
 
 class World
 {
@@ -66,29 +67,7 @@ public:
 				waterTile.Draw(window);
 	}
 
-	bool IsTileInView(Vector2 tilePosition, sf::View& view)
-	{
-		sf::Vector2f viewCenter = view.getCenter();
-		sf::Vector2f viewSize = view.getSize();
-
-		if (tilePosition.x > viewCenter.x + viewSize.x || tilePosition.x < viewCenter.x - viewSize.x)
-			return false;
-
-		if (tilePosition.y < viewCenter.y - viewSize.y || tilePosition.y > viewCenter.y + viewSize.y)
-			return false;
-
-		return true;
-	}
-
-	Vector2 GetWorldSize() const
-	{
-		return _worldSize;
-	}
-
-	void AddTile(IsometricTile tile)
-	{
-		_tiles.push_back(tile);
-	}
+	Vector2 GetWorldSize() const { return _worldSize; }
 
 private:
 	Vector2 _worldSize;
@@ -101,16 +80,8 @@ private:
 
 	std::vector<IsometricTile> _tiles;
 	std::vector<IsometricTile> _waterTiles;
-	std::vector<float> _heights;
 
-	int _waterHeight = -1;
-	int _sandHeight = -0.5;
-	int _grassHeight = 0;
-	int _stoneHeight = 2;
-
-	float _noiseScale = 0.05;
-	int _noiseOctaves = 4;
-	float _noisePersistence = 0.2;
+	WorldGeneration _worldGeneration;
 
 	void GenerateTiles()
 	{
@@ -122,52 +93,63 @@ private:
 		{
 			for (int y = 0; y < _worldSize.y; y++)
 			{
-				float height = noise.octaveNoise
-				(
-					x * _noiseScale,
-					y * _noiseScale,
-					0.0,
-					_noiseOctaves,
-					_noisePersistence
-				) * 7.5;
+				if (CreateGroundTile(x, y) > _worldGeneration.GetWaterHeight())
+					continue;
 
-				height = round(height * 2) / 2;
-
-				const sf::Texture& texture = *GetTileTexture(height);
-
-
-				IsometricTile tile = IsometricTile
-				(
-					texture,
-					Vector2(x, y),
-					height
-				);
-
-				_tiles.push_back(tile);
-				_heights.push_back(height);
-
-				if (height <= -1)
-				{
-					IsometricTile waterTile = IsometricTile
-					(
-						*_transparentWaterTexture,
-						Vector2(x, y),
-						_waterHeight + 0.5f,
-						sf::Color(255, 255, 255, 255)
-					);
-
-					_waterTiles.push_back(waterTile);
-				}
+				CreateWaterTile(x, y);
 			}
 		}
 	}
 
+	float CreateGroundTile(int x, int y)
+	{
+		float height = _worldGeneration.CalculateTileHeight(x, y);
+
+		IsometricTile tile = IsometricTile
+		(
+			*GetTileTexture(height),
+			Vector2(x, y),
+			height
+		);
+
+		_tiles.push_back(tile);
+
+		return height;
+	}
+
+	void CreateWaterTile(int x, int y)
+	{
+		IsometricTile waterTile = IsometricTile
+		(
+			*_transparentWaterTexture,
+			Vector2(x, y),
+			_worldGeneration.GetWaterHeight() + 0.5f,
+			sf::Color(255, 255, 255, 255)
+		);
+
+		_waterTiles.push_back(waterTile);
+	}
+
 	std::shared_ptr<sf::Texture> GetTileTexture(float height)
 	{
-		return height <= _sandHeight && height < _grassHeight
+		return height <= _worldGeneration.GetSandHeight() && height < _worldGeneration.GetGrassHeight()
 			? _sandTileTexture
-			: height > _stoneHeight
+			: height > _worldGeneration.GetStoneHeight()
 			? _stoneTileTexture
 			: _grassTileTexture;
+	}
+
+	bool IsTileInView(Vector2 tilePosition, sf::View& view)
+	{
+		sf::Vector2f viewCenter = view.getCenter();
+		sf::Vector2f viewSize = view.getSize();
+
+		if (tilePosition.x > viewCenter.x + viewSize.x || tilePosition.x < viewCenter.x - viewSize.x)
+			return false;
+
+		if (tilePosition.y < viewCenter.y - viewSize.y || tilePosition.y > viewCenter.y + viewSize.y)
+			return false;
+
+		return true;
 	}
 };

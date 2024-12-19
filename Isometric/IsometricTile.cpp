@@ -13,7 +13,7 @@ public:
 		Vector2 isometricPosition = Vector2
 		(
 			(position.x - position.y) * (tileWidth / 2),
-			(position.x + position.y) * (tileHeight / 2) - (height * tileHeight / 2)
+			(position.x + position.y) * (tileHeight / 2) - (height * tileHeight)
 		);
 
 		_position = isometricPosition;
@@ -31,6 +31,9 @@ public:
 	void SetSelected(bool selected)
 	{
 		_sprite.setColor(selected ? sf::Color::Red : sf::Color::White);
+
+		if (selected)
+			std::cout << _height << std::endl;
 	}
 
 	Vector2 GetPosition() const
