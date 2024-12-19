@@ -16,19 +16,21 @@ public:
 		_sandTileTexture = std::make_shared<sf::Texture>();
 		_transparentWaterTexture = std::make_shared<sf::Texture>();
 
-		if (!_grassTileTexture->loadFromFile("grassTile.png"))
+		const std::string imagePath = "Assets/Images/";
+
+		if (!_grassTileTexture->loadFromFile(imagePath + "grassTile.png"))
 			std::cout << "Failed to load grassTile.png" << std::endl;
 
-		if (!_waterTileTexture->loadFromFile("waterTile.png"))
+		if (!_waterTileTexture->loadFromFile(imagePath + "waterTile.png"))
 			std::cout << "Failed to load waterTile.png" << std::endl;
 
-		if (!_stoneTileTexture->loadFromFile("stoneTile.png"))
+		if (!_stoneTileTexture->loadFromFile(imagePath + "stoneTile.png"))
 			std::cout << "Failed to load stoneTile.png" << std::endl;
 
-		if (!_sandTileTexture->loadFromFile("sandTile.png"))
+		if (!_sandTileTexture->loadFromFile(imagePath + "sandTile.png"))
 			std::cout << "Failed to load sandTile.png" << std::endl;
 
-		if (!_transparentWaterTexture->loadFromFile("transparentWaterTile.png"))
+		if (!_transparentWaterTexture->loadFromFile(imagePath + "transparentWaterTile.png"))
 			std::cout << "Failed to load transparentWater.png" << std::endl;
 
 		Setup();

@@ -142,13 +142,6 @@
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="grassTile.png" />
-    <Image Include="sandTile.png" />
-    <Image Include="stoneTile.png" />
-    <Image Include="transparentWaterTile.png" />
-    <Image Include="waterTile.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
