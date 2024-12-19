@@ -46,21 +46,53 @@ public:
 
 		int index = position.y + (position.x - 1) * _worldSize.y;
 
-		return &_tiles[index];
+		IsometricTile* tile = &_tiles[index];
+
+		float height = tile->GetHeight();
+
+		std::cout << height << std::endl;
+
+		return tile;
+
+		/*
+
+		if (height == 0)
+			return tile;*/
 	}
 
 	void Render(sf::RenderWindow& window, sf::View& view)
 	{
-		for (IsometricTile& tile : _tiles)	
-			tile.Draw(window);
+		for (IsometricTile& tile : _tiles)
+			if (IsTileInView(tile.GetPosition(), view))
+				tile.Draw(window);
 
 		for (IsometricTile& waterTile : _waterTiles)
-			waterTile.Draw(window);
+			if (IsTileInView(waterTile.GetPosition(), view))
+				waterTile.Draw(window);
+	}
+
+	bool IsTileInView(Vector2 tilePosition, sf::View& view)
+	{
+		sf::Vector2f viewCenter = view.getCenter();
+		sf::Vector2f viewSize = view.getSize();
+
+		if (tilePosition.x > viewCenter.x + viewSize.x || tilePosition.x < viewCenter.x - viewSize.x)
+			return false;
+
+		if (tilePosition.y < viewCenter.y - viewSize.y || tilePosition.y > viewCenter.y + viewSize.y)
+			return false;
+
+		return true;
 	}
 
 	Vector2 GetWorldSize() const
 	{
 		return _worldSize;
+	}
+
+	void AddTile(IsometricTile tile)
+	{
+		_tiles.push_back(tile);
 	}
 
 private:

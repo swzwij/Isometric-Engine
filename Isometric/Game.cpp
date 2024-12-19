@@ -47,11 +47,6 @@ private:
 
 				if (_selectedTile != nullptr)
 					_selectedTile->SetSelected(true);
-
-				_rectangle.setSize(sf::Vector2f(25, 25));
-				_rectangle.setFillColor(sf::Color::Red);
-				_rectangle.setPosition(worldPos);
-				_rectangle.setOrigin(12.5, 12.5);
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -85,15 +80,12 @@ private:
 
 		_world.Render(_window, _view);
 
-		_window.draw(_rectangle);
-
 		_window.display();
 	}
 
 	sf::RenderWindow _window;
 	sf::View _view;
-	World _world = World(Vector2(250, 250));
+	World _world = World(Vector2(1000, 1000));
 
-	sf::RectangleShape _rectangle;
 	IsometricTile* _selectedTile = nullptr;
 };

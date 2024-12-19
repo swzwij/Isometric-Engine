@@ -1,6 +1,6 @@
 #include "Game.cpp"
 
-const Vector2 SCREEN_SIZE(1200, 800);
+const Vector2 SCREEN_SIZE(2000, 1500);
 
 int main()
 {

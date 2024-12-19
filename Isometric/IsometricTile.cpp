@@ -16,7 +16,8 @@ public:
 			(position.x + position.y) * (tileHeight / 2) - (height * tileHeight / 2)
 		);
 
-		_position = position;
+		_position = isometricPosition;
+		_height = height;
 
 		_sprite.setPosition(isometricPosition.x, isometricPosition.y);
 		_sprite.setTexture(texture);
@@ -35,6 +36,11 @@ public:
 	Vector2 GetPosition() const
 	{
 		return _position;
+	}
+
+	float GetHeight() const
+	{
+		return _height;
 	}
 
 	static Vector2 WorldToIsometric(const Vector2& worldPosition, float tileWidth = 256.0f, float tileHeight = 128.0f)
@@ -57,4 +63,5 @@ public:
 private:
 	sf::Sprite _sprite;
 	Vector2 _position;
+	float _height;
 };
