@@ -4,8 +4,8 @@
 
 Vector2 SCREEN_SIZE = Vector2
 (
-	GetSystemMetrics(SM_CXSCREEN),
-	GetSystemMetrics(SM_CYSCREEN)
+	GetSystemMetrics(SM_CXSCREEN) / 2,
+	GetSystemMetrics(SM_CYSCREEN) / 2
 );
 
 int main()

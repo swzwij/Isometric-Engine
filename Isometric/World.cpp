@@ -58,15 +58,15 @@ public:
 
 	void Render(sf::RenderWindow& window, sf::View& view)
 	{
-		SortTiles();
+		//SortTiles();
 
 		for (IsometricTile& tile : _tiles)
 			if (IsTileInView(tile.GetPosition(), view))
 				tile.Draw(window);
 
-		//for (IsometricTile& waterTile : _waterTiles)
-		//	if (IsTileInView(waterTile.GetPosition(), view))
-		//		waterTile.Draw(window);
+		for (IsometricTile& waterTile : _waterTiles)
+			if (IsTileInView(waterTile.GetPosition(), view))
+				waterTile.Draw(window);
 	}
 
 	Vector2 GetWorldSize() const { return _worldSize; }
@@ -130,7 +130,7 @@ private:
 			sf::Color(255, 255, 255, 255)
 		);
 
-		_tiles.push_back(waterTile);
+		_waterTiles.push_back(waterTile);
 	}
 
 	std::shared_ptr<sf::Texture> GetTileTexture(float height)
