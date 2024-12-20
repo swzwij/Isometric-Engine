@@ -58,13 +58,15 @@ public:
 
 	void Render(sf::RenderWindow& window, sf::View& view)
 	{
+		SortTiles();
+
 		for (IsometricTile& tile : _tiles)
 			if (IsTileInView(tile.GetPosition(), view))
 				tile.Draw(window);
 
-		for (IsometricTile& waterTile : _waterTiles)
-			if (IsTileInView(waterTile.GetPosition(), view))
-				waterTile.Draw(window);
+		//for (IsometricTile& waterTile : _waterTiles)
+		//	if (IsTileInView(waterTile.GetPosition(), view))
+		//		waterTile.Draw(window);
 	}
 
 	Vector2 GetWorldSize() const { return _worldSize; }
@@ -88,6 +90,7 @@ private:
 		PerlinNoise noise;
 
 		_tiles.clear();
+		_tiles.reserve(_worldSize.x * _worldSize.y * 2);
 
 		for (int x = 0; x < _worldSize.x; x++)
 		{
@@ -127,7 +130,7 @@ private:
 			sf::Color(255, 255, 255, 255)
 		);
 
-		_waterTiles.push_back(waterTile);
+		_tiles.push_back(waterTile);
 	}
 
 	std::shared_ptr<sf::Texture> GetTileTexture(float height)
@@ -151,5 +154,19 @@ private:
 			return false;
 
 		return true;
+	}
+
+	void SortTiles()
+	{
+		std::sort(_tiles.begin(), _tiles.end(), [](IsometricTile& a, IsometricTile& b)
+		{
+			if (a.GetPosition().y != b.GetPosition().y)
+				return a.GetPosition().y < b.GetPosition().y;
+
+			if (a.GetPosition().x != b.GetPosition().x)
+				return a.GetPosition().x < b.GetPosition().x;
+
+			return a.GetHeight() < b.GetHeight();
+		});
 	}
 };

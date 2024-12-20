@@ -12,8 +12,6 @@ int main()
 {
 	try
 	{
-		std::cout << SCREEN_SIZE.x << ", " << SCREEN_SIZE.y << std::endl;
-
 		Game game(SCREEN_SIZE);
 		game.Run();
 	}
