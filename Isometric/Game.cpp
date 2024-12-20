@@ -56,8 +56,6 @@ private:
 					_selectedTile->SetSelected(true);
 			}
 
-			Vector2 input = 
-
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				_view.move(-250, 0);
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))

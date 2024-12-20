@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -138,6 +138,8 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="IsometricTile.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldGeneration.cpp" />
   </ItemGroup>
@@ -145,6 +147,7 @@
     <ClInclude Include="CoordinateConverter.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
