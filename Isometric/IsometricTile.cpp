@@ -28,6 +28,18 @@ public:
 			std::cout << _height << std::endl;
 	}
 
+	void SetLightLevel(float level) 
+	{
+		level = std::max(0.2f, std::min(1.0f, level));
+		sf::Color color = _sprite.getColor();
+
+		color.r = 255 * level;
+		color.g = 255 * level;
+		color.b = 255 * level;
+
+		_sprite.setColor(color);
+	}
+
 	Vector2 GetPosition() const
 	{
 		return _position;
@@ -36,6 +48,16 @@ public:
 	float GetHeight() const
 	{
 		return _height;
+	}
+
+	int GetGridX() const
+	{
+		return _position.x / 256;
+	}
+
+	int GetGridY() const
+	{
+		return _position.y / 128;
 	}
 
 private:
